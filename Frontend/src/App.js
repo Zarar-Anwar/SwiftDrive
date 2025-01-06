@@ -6,6 +6,9 @@ import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Themes from "./Pages/Themes";
 import Contact from "./Pages/Contact";
+import Login from "./Pages/Login";
+import Registration from "./Pages/Registration";
+import Profile from "./Pages/user/Profile";
 
 
 function App() {
@@ -24,6 +27,11 @@ function App() {
           <Route path='/themes' element={<Base><Themes/></Base>} />
           <Route path='/about-us' element={<Base><About/></Base>} />
           <Route path='/contact-us' element={<Base><Contact/></Base>} />
+
+          {/* User Routes */}
+          <Route path='/login' element={<Base><Login/></Base>} />
+          <Route path='/registration' element={<Base><Registration/></Base>} />
+          <Route path='/user-profile' element={<Base><Profile/></Base>} />
 
           <Route path='*' element={<PageNotFound404 />} />
 

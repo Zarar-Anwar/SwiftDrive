@@ -24,6 +24,7 @@ SECRET_KEY = 'django-insecure-r!okeoo)dz&gy!hx%i9(=$f&p1x3b@&s61n!q31xuoh(5lmy8n
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+SITE_ID = 1
 
 ALLOWED_HOSTS = []
 
@@ -43,13 +44,16 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'drf_yasg',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'rest_framework',
+
 
     # CUSTOM APPLICATIONS
     'src.api',
     'src.core',
-    'src.services.projects',
-    'src.services.services',
-    'src.services.members',
+
 ]
 
 MIDDLEWARE = [
@@ -61,7 +65,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -70,8 +81,6 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 ROOT_URLCONF = 'core.urls'
-
-SITE_ID = 1
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -102,7 +111,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
-
+ACCOUNT_EMAIL_VERIFICATION = "none"  # Optional, depending on your needs
+ACCOUNT_AUTHENTICATION_METHOD = "email"  # Use 'username' or 'username_email' if needed
+ACCOUNT_EMAIL_REQUIRED = True
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 

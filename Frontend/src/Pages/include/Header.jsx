@@ -1,7 +1,36 @@
-import React from 'react'
-import {Link} from "react-router-dom";
+import React, {useContext} from 'react'
+import {Link, useNavigate} from "react-router-dom";
+import {Store} from "../../Utils/Store";
+import api from "../../Utils/Axios";
+import {toast} from "react-toastify";
 
 function Header() {
+    const {state,dispatch} = useContext(Store)
+    const navigate = useNavigate()
+    const {UserInfo} = state
+    const handleLogout = async () => {
+    try {
+      const headers = {
+        'X-CSRFTOKEN': UserInfo.key,  // CSRF token here
+        'Content-Type': 'application/json',
+      };
+
+      await api.post("/auth/logout/", {}, { headers });
+
+      dispatch({ type: "ClearUserInfo" });
+      localStorage.removeItem("UserInfo");
+
+      navigate("/login");
+
+      toast.success("Logged out successfully!");
+    } catch (err) {
+      // Handling any error that occurs during the logout request
+      console.error("Error during logout:", err.response ? err.response.data : err);
+
+      // Showing an error notification
+      toast.error("Error logging out. Please try again.");
+    }
+  };
     return (
         <>
             <div className="nav-container ">
@@ -51,20 +80,37 @@ function Header() {
                                     </ul>
                                 </div>
                                 {/*end module*/}
-                                <div className="bar__module">
-                                    <Link
-                                        className="btn btn--sm type--uppercase"
-                                        to="/user-registration"
-                                    >
-                                        <span className="btn__text">Try Builder</span>
-                                    </Link>
-                                    <Link
-                                        className="btn btn--sm btn--primary type--uppercase"
-                                        to="/login"
-                                    >
-                                        <span className="btn__text">Buy Now</span>
-                                    </Link>
-                                </div>
+                                {UserInfo ?
+                                    <div className="bar__module">
+                                          <Link
+                                            className="btn btn--sm btn-success type--uppercase"
+                                            to="/user-profile"
+                                        >
+                                            <span className="btn__text text-white">Profile</span>
+                                        </Link>
+                                        <Link
+                                             onClick={handleLogout}
+                                            className="btn btn--sm btn-warning type--uppercase"
+                                            to="#"
+                                        >
+                                            <span className="btn__text">Log out</span>
+                                        </Link>
+
+                                    </div> : <div className="bar__module">
+                                        <Link
+                                            className="btn btn--sm type--uppercase"
+                                            to="/registration"
+                                        >
+                                            <span className="btn__text">Try Builder</span>
+                                        </Link>
+                                        <Link
+                                            className="btn btn--sm btn--primary type--uppercase"
+                                            to="/login"
+                                        >
+                                            <span className="btn__text">Login</span>
+                                        </Link>
+                                    </div>
+                                }
                                 {/*end module*/}
                             </div>
                         </div>

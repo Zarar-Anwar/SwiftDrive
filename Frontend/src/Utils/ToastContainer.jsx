@@ -5,7 +5,7 @@ function ToastContainers() {
     <>
       <ToastContainer  
    position='top-center'
-   autoClose={3000}
+   autoClose={600}
    hideProgressBar={false}
    newestOnTop={false}
    rtl={false}
