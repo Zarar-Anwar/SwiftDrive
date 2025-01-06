@@ -7,8 +7,10 @@ function Base({ children }) {
     return (
         <>
             <Header />
+            <div className="main-container">
             {children}
             <Footer />
+            </div>
 
         </>
     )
