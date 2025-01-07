@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet";
+import {Link} from "react-router-dom";
 
 function Home() {
   return (
@@ -30,14 +31,14 @@ function Home() {
                   Revolutionizing transportation with efficiency, reliability, and ease.
                   Your logistics, redefined.
                 </p>
-                <a
+                <Link
                     className="btn btn--primary type--uppercase"
-                    href="/get-started"
+                    to="/registration"
                 >
                   <span className="btn__text">Get Started</span>
-                </a>
+                </Link>
                 <span className="block type--fine-print">
-                or <a href="/features">learn more about our features</a>
+                or <a href="/themes">learn more about our features</a>
               </span>
               </div>
             </div>
@@ -55,9 +56,9 @@ function Home() {
                   SwiftDrive delivers a seamless experience with cutting-edge technology
                   designed to save you time and money.
                 </p>
-                <a className="btn btn--primary type--uppercase" href="/features">
+                <Link className="btn btn--primary type--uppercase" to="/themes">
                   <span className="btn__text">Discover Features</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
